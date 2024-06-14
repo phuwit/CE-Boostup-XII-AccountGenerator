@@ -3,6 +3,10 @@ import { parse } from "csv";
 import { generate } from "generate-password-browser";
 import { error } from "console";
 
+const requestUrl = 'http://localhost:3000/grader/api/users';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNzYxMzdmNi1iMDdhLTQ1NDEtYWJjYS00YWZhNDc2NDI0OTEiLCJyb2xlcyI6WyJTdXBlckFkbWluIl0sImlhdCI6MTcxODM4MzYwOSwiZXhwIjoxNzE4OTg4NDA5fQ.uRTVShUPTT3678aVNasmqNZhOPO2BnkFZyIsq0cKaB8';
+const passwordLength = 16;
+
 type StudentRecord = {
   rowNumber: string;
   ID: string;
@@ -49,17 +53,12 @@ const processFile = async () => {
   return records;
 };
 
-function generatePassword(length: number) {
-  const charset =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-}
-
 (async () => {
   const records = await processFile();
 
   const createUserDtos: CreateUserDto[] = records.map((record) => {
     const password = generate({
-      length: 16,
+      length: passwordLength,
       numbers: true,
       symbols: true,
       lowercase: true,
@@ -85,11 +84,11 @@ function generatePassword(length: number) {
 
   createUserDtos.forEach(async (dto) => {
     console.log(dto);
-    fetch("http://localhost:3000/grader/api/users", {
+    fetch(requestUrl, {
       method: "POST",
       body: JSON.stringify(dto),
       headers: {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNzYxMzdmNi1iMDdhLTQ1NDEtYWJjYS00YWZhNDc2NDI0OTEiLCJyb2xlcyI6WyJTdXBlckFkbWluIl0sImlhdCI6MTcxODM4MzYwOSwiZXhwIjoxNzE4OTg4NDA5fQ.uRTVShUPTT3678aVNasmqNZhOPO2BnkFZyIsq0cKaB8",
+        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"
       }
     })
