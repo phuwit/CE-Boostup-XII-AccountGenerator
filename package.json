@@ -16,6 +16,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "csv": "^6.3.9"
+    "csv": "^6.3.9",
+    "generate-password-browser": "^1.1.0"
   }
 }
