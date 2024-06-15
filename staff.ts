@@ -42,7 +42,7 @@ interface CreateUserDto {
 
 const processFile = async () => {
   const records: StudentRecord[] = [];
-  const parser = fs.createReadStream("./student-list.csv").pipe(
+  const parser = fs.createReadStream("./staff-list.csv").pipe(
     parse({
       columns: true,
     })

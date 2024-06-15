@@ -1,1 +1,1 @@
-run with `pnpm run start` or `pnpx tsx main.ts`
+run with `pnpx tsx staff.ts` or `pnpx tsx user.ts`
